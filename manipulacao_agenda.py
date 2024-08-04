@@ -1,18 +1,8 @@
 import json
 
 contatos_suportados = ("telefone", "email", "endereco")
-agenda = {
-    "Pessoa 1":{
-        "telefone":["11 1234-5678"],
-        "email":["pessoa1@email.com", "email@profissional.com"],
-        "endereco":["Rua 123"]
-    },
-    "Pessoa 2":{
-        "telefone":["11 9875-5678"],
-        "email":["pessoa2@email.com", "pessoa2@profissional.com"],
-        "endereco":["Rua 345"]
-    }
-}
+agenda = {}
+
 def agenda_para_txt(nome_arquivo:str, agenda):
     if ".txt" not in nome_arquivo:
         nome_arquivo = f"{nome_arquivo}.txt"
@@ -44,7 +34,7 @@ def contato_para_texto(nome_contato:str, **formas_contato):
             formato_texto = (f"{formato_texto}\n{contador_formas} - {valor.upper()}")
             contador_formas = contador_formas + 1
     return  formato_texto
-#print(contato_para_texto("Pessoa 2", **agenda["Pessoa 2"]))
+
 def agenda_para_texto(**agenda_completa):
     """Recebe um dicionario de dicionarios com a agenda que sera exibida
      e retorna uma string com este dicionario formatado"""
@@ -53,7 +43,7 @@ def agenda_para_texto(**agenda_completa):
         formato_texto = (f"{formato_texto}\n{contato_para_texto(nome_contato, **formas_contato)}")
         formato_texto = f"{formato_texto}\n------------------------"
     return formato_texto
-print(agenda_para_texto(**agenda))
+
 def altera_nome_contato(agenda_original:dict, nome_original:str, nome_atualizado:str):
     """Recebe a agenda original em forma de dicionario, o nome_original
     e o nome_atualizado em forma de string.
@@ -77,10 +67,7 @@ def altera_forma_contato(lista_contatos:list, valor_antigo:str, novo_valor:str):
         lista_contatos.insert(posicao_valor_antigo, novo_valor)
         return True
     return False
-altera_nome_contato(agenda, "Pessoa 2", "Super Pessoa")
-print(agenda_para_texto(**agenda))
-altera_forma_contato(agenda["Pessoa 1"]["telefone"], "11 1234-5678", "123")
-print(agenda_para_texto(**agenda))
+
 def exclui_contato(agenda:dict, nome_contato:str):
     """Recebe uma agenda completa como dicionario e o nome do contato como string.
     Caso o nome dos contatos nao esteja nas chaves do dicionario, retornara False.
@@ -96,8 +83,7 @@ def inclui_contato(agenda:dict, nome_contato:str, **formas_contato):
     Nao e feita nenhuma verificacao, portanto se ja existir um contato com o mesmo nome,
     sera sobrescrito"""
     agenda[nome_contato] = formas_contato
-inclui_contato(agenda, "Juquinha", telefone = ["11 1234-5678"], email = ["juquinha@email.com"])
-#print(agenda_para_texto(**agenda))
+
 def inclui_forma_contato(formas_contato:dict, forma_incluida:str, valor_incluido:str):
     """Recebe um dicionário com as formas de contato, a forma de contato
      que será incluida ou alterada e o valor que será incluído.
@@ -115,8 +101,7 @@ def inclui_forma_contato(formas_contato:dict, forma_incluida:str, valor_incluido
         formas_contato[forma_incluida] = [valor_incluido]
         return True
     return False
-#inclui_forma_contato(agenda["Juquinha"], "endereco", "Rua dos Jucas")
-#print(agenda_para_texto(**agenda))
+
 def usuario_inclui_contato(agenda:dict):
     nome = input("Informe o nome do novo contato que sera incluido na agenda: ")
     dicionario_formas = {}
